@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=3 uid="uid://gatcgl1byqpi"]
+
+[ext_resource type="Script" path="res://Scripts/Target.gd" id="1_xviij"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxyjx"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+diffuse_mode = 1
+specular_mode = 2
+disable_ambient_light = true
+albedo_color = Color(1, 0.5, 0.5, 0.501961)
+disable_receive_shadows = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_2ay6w"]
+material = SubResource("StandardMaterial3D_wxyjx")
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_klins"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetMesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hcgj4"]
+resource_name = "hover"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TargetMesh:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0), Vector3(0, 1, 0), Vector3(0, 0.5, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ycc4g"]
+_data = {
+"RESET": SubResource("Animation_klins"),
+"hover": SubResource("Animation_hcgj4")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kmao3"]
+size = Vector3(0, 0.1, 0)
+
+[node name="Target" type="Node3D"]
+script = ExtResource("1_xviij")
+metadata/is_target = true
+
+[node name="TargetMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("QuadMesh_2ay6w")
+
+[node name="TargetAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ycc4g")
+}
+
+[node name="TargetArea" type="Area3D" parent="."]
+
+[node name="TargetCollision" type="CollisionShape3D" parent="TargetArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_kmao3")
+
+[connection signal="body_entered" from="TargetArea" to="." method="_on_target_area_body_entered"]
+[connection signal="body_exited" from="TargetArea" to="." method="_on_target_area_body_exited"]

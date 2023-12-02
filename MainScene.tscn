@@ -1,0 +1,204 @@
+[gd_scene load_steps=19 format=3 uid="uid://c4s1jokmno0rw"]
+
+[ext_resource type="Script" path="res://Scripts/MainScene.gd" id="1_0ajgy"]
+[ext_resource type="PackedScene" uid="uid://c6mw2saoqgjt" path="res://Objects/Cursor.tscn" id="2_b6nko"]
+[ext_resource type="Script" path="res://Scripts/Camera.gd" id="2_ms47r"]
+[ext_resource type="Script" path="res://Scripts/SelectedObjectLabel.gd" id="3_2imci"]
+[ext_resource type="Script" path="res://Scripts/EditorLabels.gd" id="3_7tgk7"]
+[ext_resource type="Script" path="res://Scripts/LevelLabel.gd" id="3_776jk"]
+[ext_resource type="LabelSettings" uid="uid://bcdlpeew1ykcg" path="res://label-settings.tres" id="3_tcamj"]
+[ext_resource type="Script" path="res://Scripts/PositionLabel.gd" id="4_ejb34"]
+[ext_resource type="Script" path="res://Scripts/ActionLabel.gd" id="6_3asx3"]
+[ext_resource type="Script" path="res://Scripts/PlayerLabel.gd" id="8_1ojnp"]
+[ext_resource type="Script" path="res://Scripts/EditorControls.gd" id="9_251vg"]
+[ext_resource type="Script" path="res://Scripts/BoxesTargetsLabel.gd" id="9_k18b4"]
+[ext_resource type="Script" path="res://Scripts/EditorControlsLabel.gd" id="13_ljoiy"]
+[ext_resource type="Script" path="res://Scripts/PlayerLabels.gd" id="14_80gkh"]
+[ext_resource type="Script" path="res://Scripts/PlayerControlsLabel.gd" id="15_0ol2v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2cp8x"]
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_uarw1"]
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1a0hl"]
+shadow_size = 2
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_0ajgy")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 5, 2.5)
+script = ExtResource("2_ms47r")
+
+[node name="Cursor" parent="." instance=ExtResource("2_b6nko")]
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="EditorLabels" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_7tgk7")
+
+[node name="EditorLevelLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+text = "Level"
+label_settings = ExtResource("3_tcamj")
+script = ExtResource("3_776jk")
+
+[node name="PositionLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+text = "Position"
+label_settings = ExtResource("3_tcamj")
+script = ExtResource("4_ejb34")
+
+[node name="SelectedObjectLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+text = "Selected Object"
+label_settings = ExtResource("3_tcamj")
+script = ExtResource("3_2imci")
+
+[node name="PlayerLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+text = "Player: None"
+label_settings = SubResource("LabelSettings_2cp8x")
+script = ExtResource("8_1ojnp")
+
+[node name="BoxesTargetsLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+text = "Boxes/Targets: 0/0"
+label_settings = SubResource("LabelSettings_uarw1")
+script = ExtResource("9_k18b4")
+
+[node name="ActionLabel" type="Label" parent="UI/EditorLabels"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1a0hl")
+script = ExtResource("6_3asx3")
+
+[node name="ActionLabelTimer" type="Timer" parent="UI/EditorLabels/ActionLabel"]
+wait_time = 2.0
+
+[node name="EditorControls" type="VBoxContainer" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+script = ExtResource("9_251vg")
+
+[node name="EditorControlsLabel" type="Label" parent="UI/EditorControls"]
+layout_mode = 2
+text = "Movement: Arrow keys / WSAD
+Center Camera: C
+Change level: , / . (comma / period) - auto-saves
+Change object: [ / ] (square brackets)
+Place object: Enter
+Delete object: Delete
+Save level: F5
+Load level: F6 (good for reverting unsaved changes)
+Clear level: CTRL+C
+Play level: P
+Return to pack selection: Escape
+H: Toggles this hot mess"
+label_settings = ExtResource("3_tcamj")
+script = ExtResource("13_ljoiy")
+
+[node name="PlayerLabels" type="VBoxContainer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("14_80gkh")
+
+[node name="PlayerLevelLabel" type="Label" parent="UI/PlayerLabels"]
+layout_mode = 2
+text = "Level"
+label_settings = ExtResource("3_tcamj")
+
+[node name="MovesLabel" type="Label" parent="UI/PlayerLabels"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Moves"
+label_settings = ExtResource("3_tcamj")
+
+[node name="ScoreLabel" type="Label" parent="UI/PlayerLabels"]
+layout_mode = 2
+text = "Score"
+label_settings = ExtResource("3_tcamj")
+
+[node name="PlayerControls" type="VBoxContainer" parent="UI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 116.0
+grow_vertical = 0
+
+[node name="PlayerControlsLabel" type="Label" parent="UI/PlayerControls"]
+layout_mode = 2
+text = "Movement: Arrow keys / WSAD
+Center Camera: C
+Edit level: E
+Return to pack selection: Escape
+H: Toggles this text"
+label_settings = ExtResource("3_tcamj")
+script = ExtResource("15_0ol2v")
+
+[node name="EditorLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -39.5
+offset_right = 39.5
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "Edit mode"
+label_settings = ExtResource("3_tcamj")
+
+[connection signal="level_changed" from="Cursor" to="UI/EditorLabels/EditorLevelLabel" method="_on_cursor_level_changed"]
+[connection signal="level_changed" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_changed"]
+[connection signal="level_cleared" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_cleared"]
+[connection signal="level_loaded" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_loaded"]
+[connection signal="level_saved" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_saved"]
+[connection signal="moved" from="Cursor" to="Camera" method="_on_cursor_moved"]
+[connection signal="moved" from="Cursor" to="UI/EditorLabels/PositionLabel" method="_on_cursor_moved"]
+[connection signal="object_deleted" from="Cursor" to="UI/EditorLabels/PlayerLabel" method="_on_cursor_object_deleted"]
+[connection signal="object_deleted" from="Cursor" to="UI/EditorLabels/BoxesTargetsLabel" method="_on_cursor_object_deleted"]
+[connection signal="object_deleted" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_object_deleted"]
+[connection signal="object_placed" from="Cursor" to="UI/EditorLabels/PlayerLabel" method="_on_cursor_object_placed"]
+[connection signal="object_placed" from="Cursor" to="UI/EditorLabels/BoxesTargetsLabel" method="_on_cursor_object_placed"]
+[connection signal="object_placed" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_object_placed"]
+[connection signal="play_mode_requested" from="Cursor" to="." method="_on_cursor_play_mode_requested"]
+[connection signal="play_mode_requested" from="Cursor" to="Camera" method="_on_cursor_play_mode_requested"]
+[connection signal="play_mode_requested" from="Cursor" to="UI/EditorLabels" method="_on_cursor_play_mode_requested"]
+[connection signal="play_mode_requested" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_play_mode_requested"]
+[connection signal="play_mode_requested" from="Cursor" to="UI/EditorControls" method="_on_cursor_play_mode_requested"]
+[connection signal="selected_object_changed" from="Cursor" to="UI/EditorLabels/SelectedObjectLabel" method="_on_cursor_selected_object_changed"]
+[connection signal="starting_edit_mode" from="Cursor" to="UI/EditorLabels" method="_on_cursor_starting_edit_mode"]
+[connection signal="starting_edit_mode" from="Cursor" to="UI/EditorControls" method="_on_cursor_starting_edit_mode"]
+[connection signal="timeout" from="UI/EditorLabels/ActionLabel/ActionLabelTimer" to="UI/EditorLabels/ActionLabel" method="_on_action_label_timer_timeout"]

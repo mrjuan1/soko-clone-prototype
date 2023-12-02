@@ -1,0 +1,68 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6b7i8ftt0l4m"]
+
+[ext_resource type="Script" path="res://Scripts/PackSelection.gd" id="1_g6r4l"]
+[ext_resource type="Script" path="res://Scripts/ItemList.gd" id="2_5plv0"]
+[ext_resource type="Script" path="res://Scripts/NewButton.gd" id="3_ftjw7"]
+[ext_resource type="Script" path="res://Scripts/OkayButton.gd" id="4_q5ek3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e8br4"]
+font_size = 32
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="PackSelection" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g6r4l")
+
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="MainContainer"]
+layout_mode = 2
+text = "Level Pack Selection"
+label_settings = SubResource("LabelSettings_e8br4")
+
+[node name="ItemList" type="ItemList" parent="MainContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+script = ExtResource("2_5plv0")
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="MainContainer"]
+layout_mode = 2
+
+[node name="PackNameField" type="LineEdit" parent="MainContainer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+placeholder_text = "New pack name"
+
+[node name="NewButton" type="Button" parent="MainContainer/ButtonsContainer"]
+layout_mode = 2
+text = "New pack"
+script = ExtResource("3_ftjw7")
+
+[node name="OkayButtonContainer" type="HBoxContainer" parent="MainContainer/ButtonsContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="OkayButton" type="Button" parent="MainContainer/ButtonsContainer/OkayButtonContainer"]
+layout_mode = 2
+text = "Okay"
+script = ExtResource("4_q5ek3")
+
+[connection signal="item_activated" from="MainContainer/ItemList" to="MainContainer/ItemList" method="_on_item_activated"]

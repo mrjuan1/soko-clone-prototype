@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6mw2saoqgjt"]
+
+[ext_resource type="Script" path="res://Scripts/Cursor.gd" id="1_5nf61"]
+[ext_resource type="PackedScene" uid="uid://drsa48wb1fqsu" path="res://Objects/Floor.tscn" id="3_b6akp"]
+[ext_resource type="PackedScene" uid="uid://c1cpnsokv23qc" path="res://Objects/Box.tscn" id="4_3o2qh"]
+[ext_resource type="PackedScene" uid="uid://gatcgl1byqpi" path="res://Objects/Target.tscn" id="5_3b6s0"]
+[ext_resource type="PackedScene" uid="uid://1fqik14d8st1" path="res://Objects/Player.tscn" id="6_y7i6l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qdodw"]
+transparency = 1
+shading_mode = 0
+diffuse_mode = 1
+specular_mode = 2
+disable_ambient_light = true
+albedo_color = Color(0.5, 0.5, 0.5, 0.25098)
+disable_receive_shadows = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_5hj41"]
+material = SubResource("StandardMaterial3D_qdodw")
+size = Vector3(1.1, 1.1, 1.1)
+
+[node name="Cursor" type="Node3D"]
+script = ExtResource("1_5nf61")
+
+[node name="CursorMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("BoxMesh_5hj41")
+
+[node name="Placeholders" type="Node3D" parent="."]
+
+[node name="Floor" parent="Placeholders" instance=ExtResource("3_b6akp")]
+unique_name_in_owner = true
+
+[node name="Box" parent="Placeholders" instance=ExtResource("4_3o2qh")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Target" parent="Placeholders" instance=ExtResource("5_3b6s0")]
+unique_name_in_owner = true
+visible = false
+
+[node name="Player" parent="Placeholders" instance=ExtResource("6_y7i6l")]
+unique_name_in_owner = true
+visible = false
