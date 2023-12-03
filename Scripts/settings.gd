@@ -10,8 +10,6 @@ func _ready() -> void:
 	if settings_str:
 		var settings: Variant = JSON.parse_string(settings_str)
 		if settings:
-			Levels.level = settings.level - 1
-			Levels.pack_file = settings.pack_file
 			show_help = settings.show_help
 			start_in_editor = settings.start_in_editor
 		else:
@@ -24,8 +22,6 @@ func save_settings() -> void:
 	var file: FileAccess = FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
 	if file:
 		var settings: Dictionary = {
-			"level": Levels.level + 1,
-			"pack_file": Levels.pack_file,
 			"show_help": show_help,
 			"start_in_editor": start_in_editor
 		}

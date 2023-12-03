@@ -17,4 +17,5 @@ func _ready() -> void:
 func _on_item_activated(index: int) -> void:
 	var pack_name: String = get_item_text(index)
 	Levels.pack_file = pack_name + ".lpk"
+	Progress.read_progress()
 	get_tree().change_scene_to_file("res://MainScene.tscn")

@@ -180,6 +180,9 @@ grow_horizontal = 2
 text = "Edit mode"
 label_settings = ExtResource("3_tcamj")
 
+[node name="ReloadSceneTimer" type="Timer" parent="."]
+wait_time = 0.1
+
 [connection signal="level_changed" from="Cursor" to="UI/EditorLabels/EditorLevelLabel" method="_on_cursor_level_changed"]
 [connection signal="level_changed" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_changed"]
 [connection signal="level_cleared" from="Cursor" to="UI/EditorLabels/ActionLabel" method="_on_cursor_level_cleared"]
@@ -202,3 +205,4 @@ label_settings = ExtResource("3_tcamj")
 [connection signal="starting_edit_mode" from="Cursor" to="UI/EditorLabels" method="_on_cursor_starting_edit_mode"]
 [connection signal="starting_edit_mode" from="Cursor" to="UI/EditorControls" method="_on_cursor_starting_edit_mode"]
 [connection signal="timeout" from="UI/EditorLabels/ActionLabel/ActionLabelTimer" to="UI/EditorLabels/ActionLabel" method="_on_action_label_timer_timeout"]
+[connection signal="timeout" from="ReloadSceneTimer" to="." method="_on_reload_scene_timer_timeout"]

@@ -206,6 +206,7 @@ func change_level(direction: int) -> void:
 			Levels.next_level()
 		else:
 			Levels.prev_level()
+		Progress.save_progress()
 
 		populate_level()
 		level_changed.emit()

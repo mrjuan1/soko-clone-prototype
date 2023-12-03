@@ -4,9 +4,9 @@ extends Node3D
 @onready var player_labels: VBoxContainer = %PlayerLabels
 @onready var moves_label: Label = %MovesLabel
 @onready var player_controls: VBoxContainer = %PlayerControls
+@onready var reload_scene_timer: Timer = $ReloadSceneTimer
 
 var player: Node
-var best_moves: int
 
 var moves: int = -1
 var score: int = 0
@@ -24,7 +24,6 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 		for child in children:
 			if child.get_meta("is_player", false):
 				player = child
-				best_moves = Moves.read_level_moves()
 				player_moved(0.0, 0.0)
 				child.connect("moved", player_moved)
 				player.is_playing = true
@@ -45,8 +44,8 @@ func player_moved(_x: float, _y: float) -> void:
 	moves += 1
 	moves_label.text = "Moves: %d" % moves
 
-	if best_moves > 0:
-		moves_label.text += " (Best: %d)" % best_moves
+	if Progress.moves > 0:
+		moves_label.text += " (Best: %d)" % Progress.moves
 
 func target_entered() -> void:
 	score += 1
@@ -60,14 +59,17 @@ func check_score() -> void:
 	if score < 0:
 		score = 0
 	elif score == targets:
-		if best_moves == 0 or moves < best_moves:
-			Moves.save_level_moves(moves)
+		player.is_playing = false
 
 		if Levels.level + 1 == Levels.levels:
-			player.is_playing = false
+			Progress.save_progress(moves)
 			player_labels.set_win_label()
 		else:
 			Levels.next_level()
-			get_tree().reload_current_scene()
+			Progress.save_progress(moves)
+			reload_scene_timer.start()
 	else:
 		player_labels.set_score_label(score, targets)
+
+func _on_reload_scene_timer_timeout() -> void:
+	get_tree().reload_current_scene()

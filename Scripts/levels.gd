@@ -76,14 +76,12 @@ func clear_level() -> void:
 func next_level() -> void:
 	save_level()
 	level += 1
-	Settings.save_settings()
 	load_level()
 
 func prev_level() -> void:
 	if level - 1 >= 0:
 		save_level()
 		level -= 1
-		Settings.save_settings()
 		load_level()
 
 func validate_level() -> ValidationResult:
