@@ -4,7 +4,7 @@
 
 A prototype Sokoban clone with a level editor and level pack support. Meant to be a small-ish project for learning some more [Godot](https://godotengine.org).
 
-Made with [Godot](https://godotengine.org) 4.1.3, obviously.
+Made with [Godot](https://godotengine.org) 4.1.3, upgraded to 4.2.
 
 ## Running
 

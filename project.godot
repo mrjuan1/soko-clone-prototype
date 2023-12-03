@@ -14,7 +14,7 @@ config/name="Soko Clone Prototype"
 config/description="A prototype Sokoban clone with a level editor and level pack support"
 config/tags=PackedStringArray("test")
 run/main_scene="res://PackSelection.tscn"
-config/features=PackedStringArray("4.1", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -33,7 +33,7 @@ formats/gzip/compression_level=9
 
 [debug]
 
-settings/stdout/print_fps=true
+gdscript/warnings/untyped_declaration=2
 
 [display]
 
