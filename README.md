@@ -20,7 +20,7 @@ This project sadly has no mobile support or gamepad support. Only PC and browser
 
 ## Problems
 
-Best moves saved on newer level packs can get overwrited if new levels are added to older level packs. No plans to fix this right now (see below).
+Best moves saved on newer level packs can get overwritten if new levels are added to older level packs. No plans to fix this right now (see below).
 
 ## Future enhancements
 
