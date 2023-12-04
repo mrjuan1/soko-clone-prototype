@@ -15,16 +15,20 @@ func read_progress(only_level: bool = false) -> void:
 
 			if pack_file_str == Levels.pack_file:
 				Levels.level = file.get_8()
+				Levels.levels = file.get_8()
 				if only_level:
 					file.close()
 					return
 
-				var levels: int = file.get_8()
-				for j in levels:
+				for j in Levels.levels:
 					moves = file.get_16()
 					if j == Levels.level:
 						file.close()
 						return
+
+				print("Didn't find level %d out of %d, for some reason\n" % [Levels.level, Levels.levels])
+				file.close()
+				return
 
 		file.close()
 		add_current_pack()
@@ -80,11 +84,13 @@ func save_progress(new_moves: int = 0, progress_level: bool = false) -> void:
 					file.store_8(Levels.level)
 
 				if new_moves == 0 or moves != new_moves:
+					if progress_level:
+						Levels.next_level()
 					file.close()
 					return
 
-				var levels: int = file.get_8()
-				for j in levels:
+				Levels.levels = file.get_8()
+				for j in Levels.levels:
 					if j == Levels.level:
 						file.store_16(moves)
 						if progress_level:
@@ -95,6 +101,10 @@ func save_progress(new_moves: int = 0, progress_level: bool = false) -> void:
 						return
 					else:
 						file.get_16()
+
+				print("This line should never be reached")
+				file.close()
+				return
 
 		file.close()
 		add_current_pack()

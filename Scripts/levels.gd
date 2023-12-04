@@ -24,10 +24,14 @@ var level: int = 0
 var level_grid: Array[Array] = []
 var level_changed: bool = false
 
-func load_level() -> void:
+func load_level(only_levels: bool = false) -> void:
 	var file: FileAccess = FileAccess.open(pack_file, FileAccess.READ)
 	if file:
 		levels = file.get_8()
+		if only_levels:
+			file.close()
+			return
+
 		if level == levels:
 			file.close()
 			clear_level()

@@ -77,16 +77,14 @@ func _physics_process(delta: float) -> void:
 	position = lerp(position, target_position, movement_lerp_speed * delta)
 
 func initialise() -> void:
+	Levels.load_level(true)
 	Progress.read_progress(true)
-
 	load_level()
 	level_changed.emit()
 
 	if Settings.start_in_editor:
-		change_selected_object(1)
 		starting_edit_mode.emit()
 	elif not play_level():
-		change_selected_object(1)
 		Settings.start_in_editor = true
 		Settings.save_settings()
 		starting_edit_mode.emit()
@@ -149,6 +147,7 @@ func delete_object() -> void:
 
 func save_level() -> void:
 	Levels.save_level()
+	Progress.save_progress()
 	level_saved.emit()
 
 func load_level() -> void:
@@ -208,24 +207,23 @@ func change_level(direction: int) -> void:
 			Levels.next_level()
 		else:
 			Levels.prev_level()
-		Progress.save_progress()
 
 		populate_level()
 		level_changed.emit()
 
 func play_level() -> bool:
 	var result: Levels.ValidationResult = Levels.validate_level()
-	play_mode_requested.emit(result)
-
 	if result == Levels.ValidationResult.SUCCESS:
 		save_level()
 		Settings.start_in_editor = false
 		Settings.save_settings()
 		place_walls()
+		play_mode_requested.emit(result)
 		queue_free()
 		return true
-
-	return false
+	else:
+		play_mode_requested.emit(result)
+		return false
 
 func place_walls() -> void:
 	for x in Levels.LEVEL_X_SIZE:
