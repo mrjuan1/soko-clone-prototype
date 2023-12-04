@@ -18,6 +18,10 @@ Selecting an existing pack should start at the first level. Creating a new pack 
 
 This project sadly has no mobile support or gamepad support. Only PC and browser with a keyboard (and mouse on the pack selection screen).
 
+## Problems
+
+Best moves saved on newer level packs can get overwrited if new levels are added to older level packs. No plans to fix this right now (see below).
+
 ## Future enhancements
 
 Probably won't ever be any, but PRs are welcome! See [TODO.md](TODO.md) for some ideas that didn't make it in.
