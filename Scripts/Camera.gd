@@ -1,9 +1,9 @@
 extends Camera3D
 
 @export var camera_z_offset: float = 2.5
-@export var max_x_distance: float = 3.0
-@export var min_y_distance: float = -5.5
-@export var max_y_distance: float = -0.5
+@export var max_x_distance: float = 2.0
+@export var min_y_distance: float = -4.5
+@export var max_y_distance: float = -1.5
 @export var movement_lerp_speed: float = 10.0
 
 @onready var target_position: Vector3 = position
