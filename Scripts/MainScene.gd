@@ -20,6 +20,8 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 	if validation_result == Levels.ValidationResult.SUCCESS:
 		editor_label.visible = false
 
+		Progress.read_progress()
+
 		var children: Array[Node] = get_children()
 		for child in children:
 			if child.get_meta("is_player", false):
@@ -65,8 +67,7 @@ func check_score() -> void:
 			Progress.save_progress(moves)
 			player_labels.set_win_label()
 		else:
-			Levels.next_level()
-			Progress.save_progress(moves)
+			Progress.save_progress(moves, true)
 			reload_scene_timer.start()
 	else:
 		player_labels.set_score_label(score, targets)

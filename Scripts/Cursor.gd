@@ -77,6 +77,8 @@ func _physics_process(delta: float) -> void:
 	position = lerp(position, target_position, movement_lerp_speed * delta)
 
 func initialise() -> void:
+	Progress.read_progress(true)
+
 	load_level()
 	level_changed.emit()
 

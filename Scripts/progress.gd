@@ -4,7 +4,7 @@ const PROGRESS_FILE: String = "progress.sav"
 
 var moves: int = 0
 
-func read_progress() -> void:
+func read_progress(only_level: bool = false) -> void:
 	var file: FileAccess = FileAccess.open(PROGRESS_FILE, FileAccess.READ)
 	if file:
 		var packs: int = file.get_8()
@@ -15,6 +15,10 @@ func read_progress() -> void:
 
 			if pack_file_str == Levels.pack_file:
 				Levels.level = file.get_8()
+				if only_level:
+					file.close()
+					return
+
 				var levels: int = file.get_8()
 				for j in levels:
 					moves = file.get_16()
@@ -24,9 +28,8 @@ func read_progress() -> void:
 
 		file.close()
 		add_current_pack()
-	else:
-		if create_progress_file():
-			return read_progress()
+	elif create_progress_file():
+		read_progress(only_level)
 
 func create_progress_file() -> bool:
 	var file: FileAccess = FileAccess.open(PROGRESS_FILE, FileAccess.WRITE)
@@ -58,7 +61,7 @@ func add_current_pack() -> void:
 	elif create_progress_file():
 		add_current_pack()
 
-func save_progress(new_moves: int = 0) -> void:
+func save_progress(new_moves: int = 0, progress_level: bool = false) -> void:
 	if moves == 0 or (new_moves > 0 and new_moves < moves):
 		moves = new_moves
 
@@ -71,8 +74,12 @@ func save_progress(new_moves: int = 0) -> void:
 			var pack_file_str: String = pack_file_buf.get_string_from_ascii()
 
 			if pack_file_str == Levels.pack_file:
-				file.store_8(Levels.level)
-				if new_moves == 0:
+				if progress_level:
+					file.store_8(Levels.level + 1)
+				else:
+					file.store_8(Levels.level)
+
+				if new_moves == 0 or moves != new_moves:
 					file.close()
 					return
 
@@ -80,6 +87,10 @@ func save_progress(new_moves: int = 0) -> void:
 				for j in levels:
 					if j == Levels.level:
 						file.store_16(moves)
+						if progress_level:
+							moves = file.get_16()
+							Levels.next_level()
+
 						file.close()
 						return
 					else:
@@ -88,4 +99,4 @@ func save_progress(new_moves: int = 0) -> void:
 		file.close()
 		add_current_pack()
 	elif create_progress_file():
-		save_progress(new_moves)
+		save_progress(new_moves, progress_level)
