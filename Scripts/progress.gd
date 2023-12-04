@@ -4,6 +4,11 @@ const PROGRESS_FILE: String = "progress.sav"
 
 var moves: int = 0
 
+# There's a problem here...
+# What if we make new levels in a pack saved before the last pack in the progress file?
+# It'll likely overwrite the following pack's name, in-turn nuking all moves saved for that pack
+# Oh well...
+
 func read_progress(only_level: bool = false) -> void:
 	var file: FileAccess = FileAccess.open(PROGRESS_FILE, FileAccess.READ)
 	if file:
@@ -89,7 +94,12 @@ func save_progress(new_moves: int = 0, progress_level: bool = false) -> void:
 					file.close()
 					return
 
-				Levels.levels = file.get_8()
+				var levels: int = file.get_8()
+				if levels != Levels.levels:
+					var position: int = file.get_position()
+					file.seek(position - 1)
+					file.store_8(Levels.levels)
+
 				for j in Levels.levels:
 					if j == Levels.level:
 						file.store_16(moves)
