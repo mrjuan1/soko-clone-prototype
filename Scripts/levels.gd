@@ -67,6 +67,8 @@ func save_level() -> void:
 				file.store_8(level_grid[x][y])
 		file.close()
 
+		Progress.save_progress(-1)
+
 		level_changed = false
 
 func clear_level() -> void:
