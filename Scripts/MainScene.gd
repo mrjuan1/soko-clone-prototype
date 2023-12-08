@@ -20,8 +20,6 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 	if validation_result == Levels.ValidationResult.SUCCESS:
 		editor_label.visible = false
 
-		Progress.load_progress()
-
 		var children: Array[Node] = get_children()
 		for child in children:
 			if child.get_meta("is_player", false):

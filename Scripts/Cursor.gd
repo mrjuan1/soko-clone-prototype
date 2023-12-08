@@ -71,15 +71,14 @@ func _process(_delta: float) -> void:
 	elif Input.is_action_just_pressed("prev_level"):
 		change_level(-1)
 	elif Input.is_action_just_pressed("play"):
-		play_level()
+		play_level(true)
 
 func _physics_process(delta: float) -> void:
 	position = lerp(position, target_position, movement_lerp_speed * delta)
 
 func initialise() -> void:
 	Levels.load_level(true)
-	if Settings.start_in_editor:
-		Progress.load_progress()
+	Progress.load_progress()
 	load_level()
 	level_changed.emit()
 
@@ -212,13 +211,15 @@ func change_level(direction: int) -> void:
 		populate_level()
 		level_changed.emit()
 
-func play_level() -> bool:
+func play_level(load_best_moves: bool = false) -> bool:
 	var result: Levels.ValidationResult = Levels.validate_level()
 	if result == Levels.ValidationResult.SUCCESS:
 		save_level()
 		Settings.start_in_editor = false
 		Settings.save_settings()
 		place_walls()
+		if load_best_moves:
+			Progress.load_progress()
 		play_mode_requested.emit(result)
 		queue_free()
 		return true
