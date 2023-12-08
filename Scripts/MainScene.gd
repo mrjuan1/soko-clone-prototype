@@ -20,7 +20,7 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 	if validation_result == Levels.ValidationResult.SUCCESS:
 		editor_label.visible = false
 
-		Progress.read_progress()
+		Progress.load_progress()
 
 		var children: Array[Node] = get_children()
 		for child in children:
@@ -46,8 +46,8 @@ func player_moved(_x: float, _y: float) -> void:
 	moves += 1
 	moves_label.text = "Moves: %d" % moves
 
-	if Progress.moves > 0:
-		moves_label.text += " (Best: %d)" % Progress.moves
+	if Progress.best_moves > 0:
+		moves_label.text += " (Best: %d)" % Progress.best_moves
 
 func target_entered() -> void:
 	score += 1
@@ -64,10 +64,11 @@ func check_score() -> void:
 		player.is_playing = false
 
 		if Levels.level + 1 == Levels.levels:
-			Progress.save_progress(moves)
+			Progress.save_progress(moves, true)
 			player_labels.set_win_label()
 		else:
-			Progress.save_progress(moves, true)
+			Progress.save_progress(moves)
+			Levels.level += 1
 			reload_scene_timer.start()
 	else:
 		player_labels.set_score_label(score, targets)

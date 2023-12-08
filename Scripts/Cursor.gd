@@ -78,7 +78,8 @@ func _physics_process(delta: float) -> void:
 
 func initialise() -> void:
 	Levels.load_level(true)
-	Progress.read_progress(true)
+	if Settings.start_in_editor:
+		Progress.load_progress()
 	load_level()
 	level_changed.emit()
 
@@ -147,7 +148,6 @@ func delete_object() -> void:
 
 func save_level() -> void:
 	Levels.save_level()
-	Progress.save_progress()
 	level_saved.emit()
 
 func load_level() -> void:
@@ -207,6 +207,7 @@ func change_level(direction: int) -> void:
 			Levels.next_level()
 		else:
 			Levels.prev_level()
+		Progress.save_progress()
 
 		populate_level()
 		level_changed.emit()

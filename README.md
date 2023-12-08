@@ -16,11 +16,7 @@ The game starts on the level pack selection screen. Select a level pack or creat
 
 Selecting an existing pack should start at the first level. Creating a new pack will start you in an empty level in the level editor. In both cases, read the instructions at the bottom-left for more info on how to use this thing.
 
-This project sadly has no mobile support or gamepad support. Only PC and browser with a keyboard (and mouse on the pack selection screen).
-
-## Problems
-
-Best moves saved on newer level packs can get overwritten if new levels are added to older level packs. No plans to fix this right now (see below).
+This project sadly has no mobile, browser or gamepad support. Only PC with a keyboard (and mouse on the pack selection screen).
 
 ## Future enhancements
 
