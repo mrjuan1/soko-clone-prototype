@@ -9,7 +9,6 @@ func load_progress() -> void:
 		Levels.level = file.get_8()
 		file.seek(1 + (Levels.level * 2))
 		best_moves = file.get_16()
-		print("Loaded best moves for level %d at file position %d: %d" % [Levels.level, file.get_position() - 2, best_moves])
 		file.close()
 	else:
 		create_progress_file()
@@ -44,7 +43,6 @@ func save_progress(moves: int = 0, dont_progress: bool = false) -> void:
 			file.seek(1 + (Levels.level * 2))
 			file.store_16(0)
 			best_moves = 0
-		print("Saved best moves for level %d at file position %d: %d" % [Levels.level, file.get_position() - 2, best_moves])
 
 		file.close()
 	elif create_progress_file():
