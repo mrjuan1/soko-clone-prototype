@@ -123,6 +123,10 @@ func place_selected_object() -> void:
 		level_objects[grid_x][grid_y][1].queue_free()
 		level_objects[grid_x][grid_y][1] = null
 
+	if level_objects[grid_x][grid_y][2]:
+		level_objects[grid_x][grid_y][2].queue_free()
+		level_objects[grid_x][grid_y][2] = null
+
 	if selected_object > 0:
 		level_objects[grid_x][grid_y][1] = object_resources[selected_object].instantiate()
 		level_objects[grid_x][grid_y][1].position = target_position
@@ -138,7 +142,7 @@ func delete_object() -> void:
 	Levels.level_grid[grid_x][grid_y] = 0
 	Levels.level_changed = true
 
-	for i in 2:
+	for i in 3:
 		if level_objects[grid_x][grid_y][i]:
 			level_objects[grid_x][grid_y][i].queue_free()
 			level_objects[grid_x][grid_y][i] = null
@@ -169,10 +173,20 @@ func populate_level() -> void:
 
 				if Levels.level_grid[x][y] > 1:
 					var index: int = Levels.level_grid[x][y] - 1
-					level_objects[x][y][1] = object_resources[index].instantiate()
-					level_objects[x][y][1].position.x = world_x
-					level_objects[x][y][1].position.z = world_z
-					parent.add_child(level_objects[x][y][1])
+					if index < 4:
+						level_objects[x][y][1] = object_resources[index].instantiate()
+						level_objects[x][y][1].position.x = world_x
+						level_objects[x][y][1].position.z = world_z
+						parent.add_child(level_objects[x][y][1])
+					else:
+						level_objects[x][y][1] = object_resources[Levels.OT_BOX].instantiate()
+						level_objects[x][y][1].position.x = world_x
+						level_objects[x][y][1].position.z = world_z
+						parent.add_child(level_objects[x][y][1])
+						level_objects[x][y][2] = object_resources[Levels.OT_TARGET].instantiate()
+						level_objects[x][y][2].position.x = world_x
+						level_objects[x][y][2].position.z = world_z
+						parent.add_child(level_objects[x][y][2])
 
 					object_placed.emit(index)
 
@@ -180,7 +194,7 @@ func clear_level_objects() -> void:
 	if len(level_objects) > 0:
 		for x in Levels.LEVEL_X_SIZE:
 			for y in Levels.LEVEL_Y_SIZE:
-				for i in 2:
+				for i in 3:
 					if level_objects[x][y][i]:
 						level_objects[x][y][i].queue_free()
 						level_objects[x][y][i] = null
@@ -191,7 +205,7 @@ func clear_level_objects() -> void:
 		for x in Levels.LEVEL_X_SIZE:
 			level_objects.append([])
 			for y in Levels.LEVEL_Y_SIZE:
-				level_objects[x].append([null, null])
+				level_objects[x].append([null, null, null])
 
 func clear_level() -> void:
 	clear_level_objects()
