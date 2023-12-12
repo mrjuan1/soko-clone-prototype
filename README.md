@@ -18,6 +18,8 @@ Selecting an existing pack should start at the first level. Creating a new pack 
 
 This project sadly has no mobile, browser or gamepad support. Only PC with a keyboard (and mouse on the pack selection screen).
 
+Original levels are by me, Sokoban levels are by the original Sokoban creators, Thinking Rabbit (c).
+
 ## Future enhancements
 
 Probably won't ever be any, but PRs are welcome! See [TODO.md](TODO.md) for some ideas that didn't make it in.
