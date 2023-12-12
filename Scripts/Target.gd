@@ -10,7 +10,7 @@ const ENTERED_HUE: float = 135.0 / 360.0
 
 @onready var target_mesh: MeshInstance3D = $TargetMesh
 @onready var target_animation: AnimationPlayer = $TargetAnimation
-@onready var target_y: float = 0.0
+@onready var target_y: float = position.y
 
 var material: StandardMaterial3D
 var target_hue: float

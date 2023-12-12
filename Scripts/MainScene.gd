@@ -12,7 +12,20 @@ var moves: int = -1
 var score: int = 0
 var targets: int = 0
 
+var frames: int = 2
+
 func _process(_delta: float) -> void:
+	if player and frames > 0:
+		frames -= 1
+		if frames == 0:
+			var children: Array[Node] = get_children()
+			var expected_score: int = 0
+			for child in children:
+				if child.get_meta("is_target", false) and child.target_hue == child.ENTERED_HUE:
+					expected_score += 1
+			score = expected_score
+			player_labels.set_score_label(score, targets)
+
 	if Input.is_action_just_pressed("quit"):
 		get_tree().change_scene_to_file("res://PackSelection.tscn")
 
@@ -35,8 +48,15 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 				child.connect("exited", target_exited)
 				child.is_playing = true
 
+				var index: int = child.get_index()
+				if index > 0:
+					var sibling: Node3D = children[index - 1]
+					if sibling.get_meta("is_box", false) and sibling.position.x == child.position.x and sibling.position.y == child.position.y:
+						child.target_y = 0.75
+						child.target_hue = child.ENTERED_HUE
+
 		player_labels.update_level_label()
-		player_labels.set_score_label(0, targets)
+		player_labels.set_score_label(score, targets)
 		player_labels.visible = true
 		player_controls.visible = true
 
