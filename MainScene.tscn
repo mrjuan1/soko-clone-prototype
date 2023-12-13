@@ -107,18 +107,16 @@ script = ExtResource("9_251vg")
 
 [node name="EditorControlsLabel" type="Label" parent="UI/EditorControls"]
 layout_mode = 2
-text = "Movement: Arrow keys / WSAD
-Center Camera: C
-Change level: , / . (comma / period) - auto-saves
-Change object: [ / ] (square brackets)
-Place object: Enter
-Delete object: Delete
-Save level: F5
-Load level: F6 (good for reverting unsaved changes)
-Clear level: CTRL+C
-Play level: P
-Return to pack selection: Escape
-H: Toggles this hot mess"
+text = "Movement: WSAD, arrows, dpad, left stick
+Center Camera: C, left stick click
+Change level: , / . (comma / period), left / right triggers (auto-saves)
+Change object: [ / ] (square brackets), left / right shoulders
+Place / delete object: Enter / Delete, gamepad bottom / right actions
+Save / load level: F5 / F6, gamepad left / top actions
+Clear level: Ctrl+C, left shoudler + right shoulder, left stick click
+Play level: P, gamepad start
+Return to pack selection: Escape, gamepad back
+Toggle controls: H, right stick click"
 label_settings = ExtResource("3_tcamj")
 script = ExtResource("13_ljoiy")
 
@@ -159,11 +157,12 @@ grow_vertical = 0
 
 [node name="PlayerControlsLabel" type="Label" parent="UI/PlayerControls"]
 layout_mode = 2
-text = "Movement: Arrow keys / WSAD
-Center Camera: C
-Edit level: E
-Return to pack selection: Escape
-H: Toggles this text"
+text = "Movement: WSAD, arrows, dpad, left stick
+Center Camera: C, left stick click
+Restart level: R, gamepad start
+Edit level: E, gamepad top action
+Return to pack selection: Escape, gamepad back
+Toggle controls: H, right stick click"
 label_settings = ExtResource("3_tcamj")
 script = ExtResource("15_0ol2v")
 

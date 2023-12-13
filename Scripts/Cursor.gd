@@ -64,7 +64,7 @@ func _process(_delta: float) -> void:
 		save_level()
 	elif Input.is_action_just_pressed("load"):
 		load_level()
-	elif Input.is_action_just_pressed("clear"):
+	elif Input.is_action_just_pressed("clear") or (Input.is_action_pressed("prev_object") and Input.is_action_pressed("next_object") and Input.is_action_pressed("center_camera")):
 		clear_level()
 	elif Input.is_action_just_pressed("next_level"):
 		change_level(1)

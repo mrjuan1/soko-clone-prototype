@@ -1,5 +1,9 @@
 extends ItemList
 
+@onready var okay_button: Button = %OkayButton
+
+var selected_item_index: int = -1
+
 func _ready() -> void:
 	var dir: DirAccess = DirAccess.open(".")
 	if dir:
@@ -13,6 +17,15 @@ func _ready() -> void:
 		dir.list_dir_end()
 	else:
 		print("Failed to read current directory")
+
+	grab_focus()
+
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("continue") and (okay_button.has_focus() or has_focus()) and selected_item_index >= 0:
+		_on_item_activated(selected_item_index)
+
+func _on_item_selected(index: int) -> void:
+	selected_item_index = index
 
 func _on_item_activated(index: int) -> void:
 	var pack_name: String = get_item_text(index)
