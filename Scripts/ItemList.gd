@@ -5,8 +5,18 @@ extends ItemList
 var selected_item_index: int = -1
 
 func _ready() -> void:
-	var dir: DirAccess = DirAccess.open(".")
+	var dir_name: String = "."
+	if OS.get_name() == "Web":
+		dir_name = "user://"
+
+	var dir: DirAccess = DirAccess.open(dir_name)
 	if dir:
+		if OS.get_name() == "Web":
+			if not FileAccess.file_exists("user://Original Levels.lpk"):
+				dir.copy("res://Original Levels.lpk", "user://Original Levels.lpk")
+			if not FileAccess.file_exists("user://Sokoban Levels.lpk"):
+				dir.copy("res://Sokoban Levels.lpk", "user://Sokoban Levels.lpk")
+
 		dir.list_dir_begin()
 		var file: String = dir.get_next()
 		while file != "":

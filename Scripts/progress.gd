@@ -1,10 +1,15 @@
 extends Node
 
+var filename_prefix: String = ""
 var best_moves: int = 0
+
+func _ready() -> void:
+	if OS.get_name() == "Web":
+		filename_prefix = "user://"
 
 func load_progress() -> void:
 	var progress_file: String = Levels.pack_file.replace(".lpk", ".sav")
-	var file: FileAccess = FileAccess.open(progress_file, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(filename_prefix + progress_file, FileAccess.READ)
 	if file:
 		Levels.level = file.get_8()
 		file.seek(1 + (Levels.level * 2))
@@ -15,7 +20,7 @@ func load_progress() -> void:
 
 func create_progress_file() -> bool:
 	var progress_file: String = Levels.pack_file.replace(".lpk", ".sav")
-	var file: FileAccess = FileAccess.open(progress_file, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(filename_prefix + progress_file, FileAccess.WRITE)
 	if file:
 		file.store_8(0)
 		for i: int in Levels.levels:
@@ -28,7 +33,7 @@ func create_progress_file() -> bool:
 
 func save_progress(moves: int = 0, dont_progress: bool = false) -> void:
 	var progress_file: String = Levels.pack_file.replace(".lpk", ".sav")
-	var file: FileAccess = FileAccess.open(progress_file, FileAccess.READ_WRITE)
+	var file: FileAccess = FileAccess.open(filename_prefix + progress_file, FileAccess.READ_WRITE)
 	if file:
 		if moves <= 0 or dont_progress:
 			file.store_8(Levels.level)

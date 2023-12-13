@@ -2,7 +2,7 @@
 
 * [x] Show pack name in edit mode
 * [x] Gamepad support
-* [ ] Web support
+* [x] Web support
 * [ ] Mobile support
 * [ ] Skip between completed levels in play mode
 * [ ] Undo last move in play mode

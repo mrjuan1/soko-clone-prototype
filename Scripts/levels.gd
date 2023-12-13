@@ -17,6 +17,7 @@ const OT_PLAYER: int = 1
 const OT_BOX: int = 2
 const OT_TARGET: int = 3
 
+var filename_prefix: String = ""
 var pack_file: String = "Original Levels.lpk"
 var levels: int = 0
 
@@ -24,8 +25,12 @@ var level: int = 0
 var level_grid: Array[Array] = []
 var level_changed: bool = false
 
+func _ready() -> void:
+	if OS.get_name() == "Web":
+		filename_prefix = "user://"
+
 func load_level(only_levels: bool = false) -> void:
-	var file: FileAccess = FileAccess.open(pack_file, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(filename_prefix + pack_file, FileAccess.READ)
 	if file:
 		levels = file.get_8()
 		if only_levels:
@@ -53,9 +58,9 @@ func load_level(only_levels: bool = false) -> void:
 
 func save_level() -> void:
 	if level_changed:
-		var file: FileAccess = FileAccess.open(pack_file, FileAccess.READ_WRITE)
+		var file: FileAccess = FileAccess.open(filename_prefix + pack_file, FileAccess.READ_WRITE)
 		if file == null:
-			file = FileAccess.open(pack_file, FileAccess.WRITE)
+			file = FileAccess.open(filename_prefix + pack_file, FileAccess.WRITE)
 
 		if level == levels:
 			levels += 1

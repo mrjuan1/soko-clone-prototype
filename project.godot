@@ -11,10 +11,13 @@ config_version=5
 [application]
 
 config/name="Soko Clone Prototype"
-config/description="A prototype Sokoban clone with a level editor and level pack support"
+config/description="A prototype Sokoban clone with a level editor, level pack support and comes with 20 original levels"
+config/version="1.1"
 config/tags=PackedStringArray("done")
 run/main_scene="res://PackSelection.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
@@ -42,7 +45,7 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/energy_saving/keep_screen_on=false
 window/stretch/mode="canvas_items"
-window/stretch/aspect="ignore"
+window/stretch/aspect="expand"
 window/stretch/scale=1.5
 window/handheld/orientation=6
 
