@@ -97,7 +97,7 @@ func change_selected_object(direction: int) -> void:
 	elif selected_object > Levels.OT_TARGET:
 		selected_object = Levels.OT_FLOOR
 
-	for i in 4:
+	for i: int in 4:
 		if i > 0:
 			objects[i].visible = false
 	objects[selected_object].visible = true
@@ -142,7 +142,7 @@ func delete_object() -> void:
 	Levels.level_grid[grid_x][grid_y] = 0
 	Levels.level_changed = true
 
-	for i in 3:
+	for i: int in 3:
 		if level_objects[grid_x][grid_y][i]:
 			level_objects[grid_x][grid_y][i].queue_free()
 			level_objects[grid_x][grid_y][i] = null
@@ -160,8 +160,8 @@ func load_level() -> void:
 	level_loaded.emit()
 
 func populate_level() -> void:
-	for x in Levels.LEVEL_X_SIZE:
-		for y in Levels.LEVEL_Y_SIZE:
+	for x: int in Levels.LEVEL_X_SIZE:
+		for y: int in Levels.LEVEL_Y_SIZE:
 			if Levels.level_grid[x][y] > 0:
 				var world_x: float = float(x - Levels.LEVEL_HALF_X_SIZE)
 				var world_z: float = float(y - Levels.LEVEL_HALF_Y_SIZE)
@@ -192,9 +192,9 @@ func populate_level() -> void:
 
 func clear_level_objects() -> void:
 	if len(level_objects) > 0:
-		for x in Levels.LEVEL_X_SIZE:
-			for y in Levels.LEVEL_Y_SIZE:
-				for i in 3:
+		for x: int in Levels.LEVEL_X_SIZE:
+			for y: int in Levels.LEVEL_Y_SIZE:
+				for i: int in 3:
 					if level_objects[x][y][i]:
 						level_objects[x][y][i].queue_free()
 						level_objects[x][y][i] = null
@@ -202,9 +202,9 @@ func clear_level_objects() -> void:
 							var index: int = Levels.level_grid[x][y] - 1
 							object_deleted.emit(index)
 	else:
-		for x in Levels.LEVEL_X_SIZE:
+		for x: int in Levels.LEVEL_X_SIZE:
 			level_objects.append([])
-			for y in Levels.LEVEL_Y_SIZE:
+			for y: int in Levels.LEVEL_Y_SIZE:
 				level_objects[x].append([null, null, null])
 
 func clear_level() -> void:
@@ -242,8 +242,8 @@ func play_level(load_best_moves: bool = false) -> bool:
 		return false
 
 func place_walls() -> void:
-	for x in Levels.LEVEL_X_SIZE:
-		for y in Levels.LEVEL_Y_SIZE:
+	for x: int in Levels.LEVEL_X_SIZE:
+		for y: int in Levels.LEVEL_Y_SIZE:
 			if Levels.level_grid[x][y] > 0:
 				var new_x: int = x - 1
 				if new_x == -1 or Levels.level_grid[new_x][y] == 0:
