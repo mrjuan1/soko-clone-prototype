@@ -41,8 +41,8 @@ func load_level(only_levels: bool = false) -> void:
 				clear_level()
 
 			file.seek(1 + (level * LEVEL_SIZE))
-			for x in LEVEL_X_SIZE:
-				for y in LEVEL_Y_SIZE:
+			for x: int in LEVEL_X_SIZE:
+				for y: int in LEVEL_Y_SIZE:
 					level_grid[x][y] = file.get_8()
 			file.close()
 
@@ -62,8 +62,8 @@ func save_level() -> void:
 		file.store_8(levels)
 
 		file.seek(1 + (level * LEVEL_SIZE))
-		for x in LEVEL_X_SIZE:
-			for y in LEVEL_Y_SIZE:
+		for x: int in LEVEL_X_SIZE:
+			for y: int in LEVEL_Y_SIZE:
 				file.store_8(level_grid[x][y])
 		file.close()
 
@@ -73,9 +73,9 @@ func save_level() -> void:
 
 func clear_level() -> void:
 	level_grid = []
-	for x in LEVEL_X_SIZE:
+	for x: int in LEVEL_X_SIZE:
 		level_grid.append([])
-		for y in LEVEL_Y_SIZE:
+		for y: int in LEVEL_Y_SIZE:
 			level_grid[x].append(0)
 	level_changed = true
 
@@ -95,8 +95,8 @@ func validate_level() -> ValidationResult:
 	var boxes: int = 0
 	var targets: int = 0
 
-	for x in LEVEL_X_SIZE:
-		for y in LEVEL_Y_SIZE:
+	for x: int in LEVEL_X_SIZE:
+		for y: int in LEVEL_Y_SIZE:
 			match level_grid[x][y] - 1:
 				OT_PLAYER:
 					players += 1

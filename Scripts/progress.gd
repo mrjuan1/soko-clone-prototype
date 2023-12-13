@@ -18,7 +18,7 @@ func create_progress_file() -> bool:
 	var file: FileAccess = FileAccess.open(progress_file, FileAccess.WRITE)
 	if file:
 		file.store_8(0)
-		for i in Levels.levels:
+		for i: int in Levels.levels:
 			file.store_16(0)
 		file.close()
 		return true
