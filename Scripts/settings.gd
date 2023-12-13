@@ -2,11 +2,15 @@ extends Node
 
 const SETTINGS_FILE: String = "settings.json"
 
+var filename_prefix: String = ""
 var start_in_editor: bool = false
 var show_help: bool = true
 
 func _ready() -> void:
-	var settings_str: String = FileAccess.get_file_as_string(SETTINGS_FILE)
+	if OS.get_name() == "Web":
+		filename_prefix = "user://"
+
+	var settings_str: String = FileAccess.get_file_as_string(filename_prefix + SETTINGS_FILE)
 	if settings_str:
 		var settings: Variant = JSON.parse_string(settings_str)
 		if settings:
@@ -19,7 +23,7 @@ func _ready() -> void:
 		save_settings()
 
 func save_settings() -> void:
-	var file: FileAccess = FileAccess.open(SETTINGS_FILE, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(filename_prefix + SETTINGS_FILE, FileAccess.WRITE)
 	if file:
 		var settings: Dictionary = {
 			"show_help": show_help,

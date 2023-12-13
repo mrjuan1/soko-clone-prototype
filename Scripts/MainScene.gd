@@ -20,7 +20,7 @@ func _process(_delta: float) -> void:
 		if frames == 0:
 			var children: Array[Node] = get_children()
 			var expected_score: int = 0
-			for child in children:
+			for child: Node in children:
 				if child.get_meta("is_target", false) and child.target_hue == child.ENTERED_HUE:
 					expected_score += 1
 			score = expected_score
@@ -34,7 +34,7 @@ func _on_cursor_play_mode_requested(validation_result: Levels.ValidationResult) 
 		editor_label.visible = false
 
 		var children: Array[Node] = get_children()
-		for child in children:
+		for child: Node in children:
 			if child.get_meta("is_player", false):
 				player = child
 				player_moved(0.0, 0.0)

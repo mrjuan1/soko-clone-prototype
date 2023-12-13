@@ -15,5 +15,6 @@ mono_crash.*.json
 # Misc.
 exports/linux/*
 exports/windows/*
+exports/web/*
 *.json
 *.sav
